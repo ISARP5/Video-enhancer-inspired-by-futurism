@@ -75,6 +75,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Escuchar actualizaciones del motor Auto desde content.js en tiempo real
+    chrome.runtime.onMessage.addListener((message) => {
+        if (message.type === 'VE_AUTO_UPDATE') {
+            const activeMode = document.querySelector('.mode-btn.active')?.dataset.mode || 'custom';
+            if (activeMode === 'auto') {
+                for (const [key, val] of Object.entries(message.payload)) {
+                    if (inputs[key]) {
+                        // Agregar una clase transitoria para hacer que el slider "brille" o se mueva suave
+                        inputs[key].style.transition = 'all 1s ease-out';
+                        inputs[key].value = val;
+                        displays[key].textContent = val + '%';
+                        
+                        setTimeout(() => { inputs[key].style.transition = ''; }, 1000);
+                    }
+                }
+            }
+        }
+    });
+
     function setUIState(mode, valuesObj = null) {
         modeBtns.forEach(b => b.classList.remove('active'));
         const btn = document.getElementById(`btn-${mode}`);

@@ -14,8 +14,18 @@
         contrast: 108,    
         saturation: 112,  
         brightness: 100,
-        algorithm: 'CAS'
+        algorithm: 'CAS',
+        mode: 'auto'
     };
+
+    // --- VARIABLES MOTOR AUTO-ADAPTATIVO ---
+    const analyzerCanvas = document.createElement('canvas');
+    analyzerCanvas.width = 32;
+    analyzerCanvas.height = 32;
+    const analyzerCtx = analyzerCanvas.getContext('2d', { willReadFrequently: true });
+    const dynamicVideoStates = new WeakMap();
+    let autoEngineInterval = null;
+    // ---------------------------------------
 
     const svgFilterId = 'video-enhancer-svg-filter';
     const feCasCompositeId = 've-cas-composite';
@@ -80,6 +90,71 @@
         }
     }
 
+    function runAutoEngine() {
+        if (state.mode !== 'auto') return;
+        
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            if (video.dataset.veVisible === 'true' && !video.paused && video.readyState >= 2) {
+                try {
+                    analyzerCtx.drawImage(video, 0, 0, 32, 32);
+                    const pixels = analyzerCtx.getImageData(0, 0, 32, 32).data;
+                    let totalLuma = 0;
+                    
+                    for (let i = 0; i < pixels.length; i += 4) {
+                        const r = pixels[i];
+                        const g = pixels[i+1];
+                        const b = pixels[i+2];
+                        totalLuma += 0.299 * r + 0.587 * g + 0.114 * b;
+                    }
+                    
+                    const avgLuma = totalLuma / 1024;
+                    
+                    let targetBrightness = state.brightness || 100;
+                    let targetContrast = state.contrast || 108;
+                    let targetSaturation = state.saturation || 112;
+
+                    if (avgLuma < 50) {
+                        targetBrightness = 125;
+                        targetContrast = 100; 
+                        targetSaturation = 108;
+                    } else if (avgLuma < 100) {
+                        targetBrightness = 115;
+                        targetContrast = 105;
+                        targetSaturation = 110;
+                    } else if (avgLuma > 200) {
+                        targetBrightness = 92;
+                        targetContrast = 115;
+                        targetSaturation = 115;
+                    }
+
+                    dynamicVideoStates.set(video, {
+                        brightness: targetBrightness,
+                        contrast: targetContrast,
+                        saturation: targetSaturation
+                    });
+
+                    applyFiltersToVideo(video);
+
+                    // COMUNICACIÓN UI: Enviar valores en vivo al popup si está abierto
+                    if (chrome.runtime && chrome.runtime.sendMessage) {
+                        chrome.runtime.sendMessage({
+                            type: 'VE_AUTO_UPDATE',
+                            payload: {
+                                brightness: targetBrightness,
+                                contrast: targetContrast,
+                                saturation: targetSaturation
+                            }
+                        }).catch(() => { /* El popup está cerrado, ignorar error */ });
+                    }
+
+                } catch(e) {
+                    // CORS issues for cross-origin <video> without anonymous attribute
+                }
+            }
+        });
+    }
+
     function applyFiltersToVideo(videoTarget) {
         // CORRECCIÓN: Permitimos ejecución aunque el video esté en pausa.
         // Los usuarios pausados necesitan ver feedback visual en tiempo real al mover los sliders interactivos!
@@ -88,11 +163,23 @@
             return;
         }
 
+        let currentActiveState = state;
+
+        if (state.mode === 'auto') {
+            videoTarget.style.transition = 'filter 1.5s ease-in-out';
+            if (dynamicVideoStates.has(videoTarget)) {
+                currentActiveState = dynamicVideoStates.get(videoTarget);
+            }
+        } else {
+            videoTarget.style.transition = '';
+        }
+
         let filters = [];
-        if (state.contrast !== 100) filters.push(`contrast(${state.contrast}%)`);
-        if (state.saturation !== 100) filters.push(`saturate(${state.saturation}%)`);
-        if (state.brightness !== 100) filters.push(`brightness(${state.brightness}%)`);
+        if (currentActiveState.contrast !== 100) filters.push(`contrast(${currentActiveState.contrast}%)`);
+        if (currentActiveState.saturation !== 100) filters.push(`saturate(${currentActiveState.saturation}%)`);
+        if (currentActiveState.brightness !== 100) filters.push(`brightness(${currentActiveState.brightness}%)`);
         
+        // El afilado es universal con el math global de SVG CAS
         if (state.sharpness > 0 && sharpFilterNode) {
             filters.push(`url('#${sharpFilterNode.id}')`);
         }
@@ -156,6 +243,10 @@
     function initializeEngine() {
         setupSVGFilter();
         
+        if (!autoEngineInterval) {
+            autoEngineInterval = setInterval(runAutoEngine, 1500);
+        }
+
         chrome.storage.local.get(['videoEnhancerSettings'], (result) => {
             if (result.videoEnhancerSettings) {
                 state = { ...state, ...result.videoEnhancerSettings };
