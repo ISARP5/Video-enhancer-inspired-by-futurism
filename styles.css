@@ -1,0 +1,306 @@
+:root {
+    /* Paleta Editorial Y2K Cielo Nublado & Red Fantasma */
+    --cielo-base: #d9e4eb;
+    --hielo-puro: #f2f7fb;
+    --azul-profundo: #09203a;
+    --azul-electrico: #2e6bc6;
+    --gris-tecnico: #7e91a0;
+    --blanco-translucido: rgba(255, 255, 255, 0.4);
+    
+    /* Glassmorphism iPhone */
+    --vidrio-desenfoque: blur(14px) saturate(160%);
+    --vidrio-fondo: rgba(255, 255, 255, 0.35);
+    --vidrio-borde: rgba(255, 255, 255, 0.8);
+    --vidrio-sombra: 0 8px 24px rgba(9, 32, 58, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 360px;
+    min-height: 560px;
+    background-color: var(--cielo-base);
+    /* Grilla Editorial Estilo Plano Arquitectónico */
+    background-image: 
+        linear-gradient(rgba(126, 145, 160, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(126, 145, 160, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, #d9e4eb 0%, #b8cddb 100%);
+    background-size: 15px 15px, 15px 15px, 100% 100%;
+    background-position: center top;
+    color: var(--azul-profundo);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* =========================================
+   DECORACIONES Y2K WEBCORE (Fondo)
+========================================= */
+.bg-deco {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.text-huge {
+    top: -10px;
+    right: -20px;
+    font-size: 120px;
+    font-weight: 900;
+    letter-spacing: -8px;
+    color: rgba(255, 255, 255, 0.45);
+    mix-blend-mode: overlay;
+}
+
+.barcode {
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: -1px;
+    color: rgba(9, 32, 58, 0.2);
+    transform-origin: left bottom;
+    transform: rotate(-90deg) translateX(100%);
+}
+
+/* =========================================
+   CONTENEDOR EDITORIAL (Grilla de Cristal)
+========================================= */
+.editorial-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.grid-block {
+    background: var(--vidrio-fondo);
+    backdrop-filter: var(--vidrio-desenfoque);
+    -webkit-backdrop-filter: var(--vidrio-desenfoque);
+    border: 1px solid var(--vidrio-borde);
+    border-radius: 12px; /* Curves iPhone mode */
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), var(--vidrio-sombra);
+    padding: 18px;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* -------------------------------------------------------------
+   Encabezado CWC.DEV2
+------------------------------------------------------------- */
+.header-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 18px;
+}
+
+.main-title {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -1px;
+    color: var(--azul-profundo);
+    margin-bottom: 6px;
+}
+
+.sub-caption {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    line-height: 1.3;
+    color: var(--gris-tecnico);
+    text-transform: uppercase;
+}
+
+/* Círculo Gráfico Japonés/Abstracto */
+.header-decor .circle-graphic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, var(--azul-electrico));
+    box-shadow: 0 4px 10px rgba(46, 107, 198, 0.4);
+    mix-blend-mode: multiply;
+}
+
+/* -------------------------------------------------------------
+   Botones de Modo (Cristales Superpuestos)
+------------------------------------------------------------- */
+.controls-block {
+    padding: 12px;
+}
+
+.modes-container {
+    display: flex;
+    gap: 8px;
+}
+
+.mode-btn {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 10px 4px;
+    color: var(--azul-profundo);
+    font-size: 10px;
+    font-weight: 800;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mode-btn:hover {
+    background: #ffffff;
+}
+
+.mode-btn:active, .mode-btn.active {
+    background: var(--azul-profundo);
+    color: #ffffff;
+    border-color: var(--azul-profundo);
+    transform: scale(0.97) translateY(1px);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.5), 0 4px 12px rgba(9, 32, 58, 0.3);
+}
+
+/* -------------------------------------------------------------
+   Panel Principal de Sistemas
+------------------------------------------------------------- */
+.panel {
+    padding-bottom: 12px; /* Ajuste por el texto decorativo abajo */
+}
+
+.panel.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
+
+.control-group {
+    margin-bottom: 18px;
+}
+.control-group:last-child {
+    margin-bottom: 10px;
+}
+
+.control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    border-bottom: 1px dotted rgba(126, 145, 160, 0.4);
+    padding-bottom: 4px;
+}
+
+.control-header label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--azul-profundo);
+    letter-spacing: 0px;
+}
+
+.value-display {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--azul-electrico);
+    background: rgba(255,255,255,0.7);
+    padding: 2px 6px;
+    border-radius: 4px;
+    min-width: 42px;
+    text-align: right;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.value-display.interacting {
+    transform: scale(1.15) rotate(-2deg);
+    background: var(--azul-profundo);
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(9, 32, 58, 0.3);
+}
+
+/* -------------------------------------------------------------
+   Sliders de Metal Glassmorphism
+------------------------------------------------------------- */
+.slider-wrapper {
+    display: flex;
+    align-items: center;
+    height: 12px;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    /* Rastro grueso y translúcido estilo UI Japonesa Y2K */
+    height: 4px;
+    background: rgba(126, 145, 160, 0.2);
+    border-radius: 2px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); 
+}
+
+/* Gotas de Cristal Metálicas (Thumbs) */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    /* Bloque cilíndrico de vidrio blanco perla */
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--azul-profundo);
+    border-radius: 5px; /* Geometría estructurada, no esférica pura */
+    box-shadow: 
+        inset 0 2px 2px #ffffff,
+        inset 0 -2px 4px rgba(126, 145, 160, 0.3),
+        0 2px 4px rgba(9, 32, 58, 0.2);
+    cursor: pointer;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+    transform: scaleX(1.3) scaleY(0.85);
+    background: var(--azul-electrico);
+    border-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(46, 107, 198, 0.4);
+}
+
+/* Texto decorativo final del bloque de sistema */
+.panel-deco-text {
+    margin-top: 15px;
+    text-align: right;
+    font-family: 'Space Mono', monospace;
+    font-size: 7px;
+    color: var(--gris-tecnico);
+    opacity: 0.7;
+}
+
+/* -------------------------------------------------------------
+   Protocolo Final (Rollback)
+------------------------------------------------------------- */
+.rollback-btn {
+    background: transparent;
+    border: 1px dashed rgba(9, 32, 58, 0.3);
+    color: var(--azul-profundo);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+    padding: 14px;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.rollback-btn:hover {
+    background: rgba(255,255,255,0.7);
+    border-style: solid;
+    border-color: var(--azul-electrico);
+    color: var(--azul-electrico);
+}
+
+.rollback-btn:active {
+    transform: scale(0.98);
+}

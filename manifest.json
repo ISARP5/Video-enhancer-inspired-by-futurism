@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Brave Video Enhancer Pro",
+  "version": "1.0.0",
+  "description": "Mejora visual en tiempo real para cualquier video HTML5. Optimizada para rendimiento y privacidad estricta.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Abrir Video Enhancer"
+  },
+  "icons": {
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

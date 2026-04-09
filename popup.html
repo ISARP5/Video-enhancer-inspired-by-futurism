@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Enhancer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Capa Estética Y2K Editorial / Network Ghost -->
+    <div class="bg-deco text-huge">O24</div>
+    <div class="bg-deco barcode">|||||||| |||||||| ||| |||||||</div>
+
+    <div class="editorial-container">
+        
+        <div class="grid-block header-block">
+            <div class="header-text">
+                <h1 class="main-title">VIDEO<br>ENHANCER</h1>
+                <p class="sub-caption">NETWORK GHOST (Calling...)<br>Vol. 03 — CWC.DEV2.SS004</p>
+            </div>
+            <div class="header-decor">
+                <div class="circle-graphic"></div>
+            </div>
+        </div>
+
+        <div class="grid-block controls-block">
+            <div class="modes-container">
+                <button id="btn-default" class="mode-btn" data-mode="default">VANILLA</button>
+                <button id="btn-auto" class="mode-btn active" data-mode="auto">GOLDEN AUTO</button>
+                <button id="btn-custom" class="mode-btn" data-mode="custom">CUSTOM</button>
+            </div>
+        </div>
+
+        <div class="grid-block panel" id="sliders-panel">
+            
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="sharpness">CAS_SHARPNESS</label>
+                    <span id="val-sharpness" class="value-display">0%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="sharpness" class="slider" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="contrast">CONTRAST_LVL</label>
+                    <span id="val-contrast" class="value-display">100%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="contrast" class="slider" min="50" max="250" value="100">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="saturation">SATURATION_IDX</label>
+                    <span id="val-saturation" class="value-display">100%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="saturation" class="slider" min="0" max="250" value="100">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="brightness">BRIGHTNESS_SYS</label>
+                    <span id="val-brightness" class="value-display">100%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="brightness" class="slider" min="50" max="200" value="100">
+                </div>
+            </div>
+            
+            <div class="panel-deco-text">
+                <p>The silent warning became louder every day.</p>
+                <p>+ / - / ++ / --</p>
+            </div>
+        </div>
+
+        <button id="btn-reset" class="grid-block rollback-btn">
+            [ EXECUTE ROLLBACK PROTOCOL ]
+        </button>
+
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
