@@ -1,0 +1,28 @@
+{
+  "name": "extension-web",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">   <br>   <h1>🌐 VIDEO ENHANCER V2</h1>   <strong>Y2K WEBCORE EDITION // LIQUID GLASS UI</strong>   <br>   <br>   <img src=\"https://img.shields.io/badge/Manifest-V3-308CF2?style=for-the-badge&logoColor=white\" alt=\"Manifest V3\">   <img src=\"https://img.shields.io/badge/Browser-Chromium-D830F2?style=for-the-badge&logoColor=white\" alt=\"Chrome/Brave\">   <img src=\"https://img.shields.io/badge/Engine-CAS_Sharpening-09203A?style=for-the-badge&logoColor=white\" alt=\"Engine CAS\">   <img src=\"https://img.shields.io/badge/Powered_by-Antigravity_AI-000000?style=for-the-badge&logo=google&logoColor=white\" alt=\"Antigravity AI\"> </div>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ISARP5/Video-enhancer-inspired-by-futurism.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ISARP5/Video-enhancer-inspired-by-futurism/issues"
+  },
+  "homepage": "https://github.com/ISARP5/Video-enhancer-inspired-by-futurism#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.2.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.3"
+  }
+}

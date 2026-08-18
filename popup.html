@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Enhancer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="./popup.js"></script>
+  <link rel="stylesheet" crossorigin href="./popup.css">
+</head>
+<body>
+    <!-- Capa Estética Persona 5 + Y2K Silver Glass (Decorativos) -->
+    <div class="bg-deco text-huge">P05</div>
+    <div class="bg-deco barcode">|||||||| |||||||| ||| |||||||</div>
+    <div class="bg-deco p5-stripe"></div>
+    <div class="bg-deco p5-star star-t1">✦</div>
+    <div class="bg-deco p5-star star-b1">✦</div>
+    <div class="bg-deco p5-star star-r1">✦</div>
+
+    <div class="editorial-container">
+        
+        <!-- Bloque de Cabecera: Angulado e Impactante -->
+        <div class="grid-block header-block">
+            <div class="header-text">
+                <h1 class="main-title">
+                    <span class="title-word w1">VIDEO</span>
+                    <span class="title-word w2">ENHANCER</span>
+                </h1>
+                <p class="sub-caption">[ ENGINE.STATE // ACTIVE // SHADER VER. 4.0 ]</p>
+            </div>
+            <div class="header-decor" style="display: flex; gap: 8px; align-items: center;">
+                <span id="sync-indicator" class="sync-indicator" style="display:none;" title="Auto-ajuste dinámico en tiempo real">[ SYNC ◉ ]</span>
+                <button id="btn-export-logs" class="hidden-star-btn" title="Descargar Reporte de Errores">✦</button>
+                <div class="star-graphic"></div>
+            </div>
+        </div>
+
+        <!-- Bloque de Controles (Modos) -->
+        <div class="grid-block controls-block">
+            <div class="technical-tag">[ MODE.SELECT // CWC.03 ]</div>
+            <div class="modes-container">
+                <button id="btn-default" class="mode-btn" data-mode="default">VANILLA</button>
+                <button id="btn-auto" class="mode-btn active" data-mode="auto">GOLDEN AUTO</button>
+                <button id="btn-custom" class="mode-btn" data-mode="custom">CUSTOM</button>
+            </div>
+        </div>
+
+        <!-- Panel de Sliders -->
+        <div class="grid-block panel" id="sliders-panel">
+            <div class="panel-technical-header">// PLATFORM CALIBRATION DATABASE ACTIVE</div>
+            
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="sharpness"><span class="bullet">✦</span> CAS_SHARPNESS</label>
+                    <span id="val-sharpness" class="value-display">0%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="sharpness" class="slider" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="contrast"><span class="bullet">✦</span> CONTRAST_LVL</label>
+                    <span id="val-contrast" class="value-display">100%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="contrast" class="slider" min="50" max="250" value="100">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="saturation"><span class="bullet">✦</span> SATURATION_IDX</label>
+                    <span id="val-saturation" class="value-display">100%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="saturation" class="slider" min="0" max="250" value="100">
+                </div>
+            </div>
+
+            <!-- Control de Brillo -->
+            <div class="control-group">
+                <div class="control-header">
+                    <label><span class="bullet">✦</span> BRIGHTNESS_LVL</label>
+                    <span class="value-display" id="val-brightness">100%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="brightness" class="slider" min="0" max="200" value="100">
+                </div>
+            </div>
+
+            <!-- Control Falso HDR -->
+            <div class="control-group">
+                <div class="control-header">
+                    <label><span class="bullet">✦</span> HDR_TONEMAP</label>
+                    <span class="value-display" id="val-hdr">0%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="hdr" class="slider" min="0" max="100" value="0">
+                </div>
+            </div>
+
+            <!-- Filtro Nocturno (Siempre Activo para Golden Auto) -->
+            <div class="control-group always-active">
+                <div class="control-header">
+                    <label><span class="bullet">✦</span> NIGHT_SHIFT</label>
+                    <span class="value-display" id="val-nightShift">0%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="nightShift" class="slider" min="0" max="100" value="0">
+                </div>
+            </div>
+            
+            <div class="panel-deco-text">
+                SYSTEM CALIBRATED // RADIAL CHROMATIC MAP
+                <br>
+                ✦ METALLIC / AERO / GLASS ✦
+            </div>
+        </div>
+
+        <!-- Botón de Rollback -->
+        <button id="btn-reset" class="grid-block rollback-btn">
+            [ EXECUTE ROLLBACK PROTOCOL ]
+        </button>
+    </div>
+    
+</body>
+</html>

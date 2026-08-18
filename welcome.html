@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Enhancer — System Initialization</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colores P5 pero adaptados al gusto del usuario (Celeste/Cyan) */
+            --celeste-p5: #00e5ff;
+            --azul-oscuro: #0a192f;
+            --negro-p5: #050505;
+            --blanco-p5: #f0f0f0;
+            --gris-p5: #d3d3d3;
+            
+            /* Fuentes P5 Style */
+            --font-p5: 'Anton', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            
+            --curva-p5: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            width: 100vw; height: 100vh;
+            overflow: hidden;
+            background: var(--celeste-p5);
+            font-family: var(--font-p5);
+            color: var(--negro-p5);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* === FONDO CAÓTICO P5 === */
+        .bg-layer {
+            position: absolute;
+            top: -10%; left: -10%;
+            width: 120%; height: 120%;
+            background: 
+                repeating-linear-gradient(45deg, 
+                    rgba(0,0,0,0.05) 0px, 
+                    rgba(0,0,0,0.05) 20px, 
+                    transparent 20px, 
+                    transparent 40px),
+                radial-gradient(circle at 50% 50%, var(--celeste-p5) 0%, #00b4d8 100%);
+            z-index: 0;
+            transform: rotate(-3deg) scale(1.1);
+        }
+
+        .bg-shape-1 {
+            position: absolute;
+            top: -20vh; left: -10vw;
+            width: 70vw; height: 150vh;
+            background: var(--blanco-p5);
+            clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+            z-index: 1;
+            transform: skewX(-15deg);
+            box-shadow: 20px 0 0 rgba(0,0,0,0.2);
+        }
+
+        .bg-shape-2 {
+            position: absolute;
+            bottom: -10vh; right: -5vw;
+            width: 60vw; height: 80vh;
+            background: var(--negro-p5);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
+            transform: skewX(10deg);
+        }
+
+        /* Textos de fondo masivos */
+        .bg-text-massive {
+            position: absolute;
+            font-size: 200px;
+            color: rgba(255,255,255,0.3);
+            z-index: 1;
+            line-height: 0.8;
+            transform: rotate(-10deg);
+            letter-spacing: -10px;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            white-space: nowrap;
+        }
+        .bg-text-massive.t1 { top: 10%; left: -5%; }
+        .bg-text-massive.t2 { bottom: 5%; right: -10%; color: rgba(0,0,0,0.1); font-size: 150px; transform: rotate(5deg); }
+
+        /* Estrellas P5 */
+        .p5-star {
+            position: absolute;
+            background: var(--blanco-p5);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            z-index: 2;
+            animation: star-spin 10s linear infinite;
+        }
+        .p5-star.black { background: var(--negro-p5); animation-direction: reverse; }
+        .s1 { top: 15%; right: 25%; width: 80px; height: 80px; }
+        .s2 { bottom: 20%; left: 15%; width: 120px; height: 120px; }
+        .s3 { top: 40%; left: 35%; width: 40px; height: 40px; }
+        
+        @keyframes star-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* === CONTENEDOR PRINCIPAL === */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* === TÍTULO EXAGERADO === */
+        .title-block {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+            transform: rotate(-3deg);
+        }
+
+        .title-main {
+            font-size: 90px;
+            line-height: 0.85;
+            color: var(--blanco-p5);
+            text-shadow: 6px 6px 0 var(--negro-p5), -2px -2px 0 var(--negro-p5), 2px -2px 0 var(--negro-p5), -2px 2px 0 var(--negro-p5);
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            background: var(--negro-p5);
+            padding: 10px 30px;
+            clip-path: polygon(2% 0, 100% 2%, 98% 100%, 0 98%);
+        }
+
+        .title-sub {
+            position: absolute;
+            bottom: -20px; right: -30px;
+            font-family: var(--font-mono);
+            font-size: 18px;
+            background: var(--blanco-p5);
+            color: var(--negro-p5);
+            padding: 5px 15px;
+            border: 3px solid var(--negro-p5);
+            transform: rotate(5deg);
+            z-index: 3;
+            font-weight: 900;
+            box-shadow: 4px 4px 0 var(--celeste-p5);
+        }
+
+        .question {
+            font-family: var(--font-mono);
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--negro-p5);
+            background: var(--blanco-p5);
+            padding: 10px 20px;
+            border: 4px solid var(--negro-p5);
+            transform: rotate(1deg) skewX(-5deg);
+            margin-bottom: 40px;
+            box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
+            text-transform: uppercase;
+        }
+        .question span {
+            color: var(--celeste-p5);
+            -webkit-text-stroke: 1px var(--negro-p5);
+        }
+
+        /* === TARJETAS DE SELECCIÓN EXAGERADAS === */
+        .cards {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-bottom: 60px;
+            width: 100%;
+        }
+
+        .card {
+            position: relative;
+            width: 320px;
+            background: var(--blanco-p5);
+            border: 6px solid var(--negro-p5);
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s var(--curva-p5);
+            transform-origin: center;
+            clip-path: polygon(5% 0%, 100% 2%, 95% 100%, 0% 98%);
+            box-shadow: 10px 10px 0 var(--negro-p5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Inclinaciones iniciales locas */
+        #card-desktop { transform: rotate(-4deg) translateY(10px); }
+        #card-notebook { transform: rotate(3deg) translateY(-10px); }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--celeste-p5);
+            z-index: 0;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.4s var(--curva-p5);
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            box-shadow: 15px 15px 0 var(--azul-oscuro);
+            border-color: var(--azul-oscuro);
+        }
+        
+        .card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .card.selected {
+            background: var(--celeste-p5);
+            transform: scale(1.15) rotate(0deg) !important;
+            box-shadow: 20px 20px 0 var(--negro-p5);
+            border-color: var(--negro-p5);
+            clip-path: polygon(0% 2%, 100% 0%, 98% 100%, 2% 98%);
+            animation: shake 0.4s var(--curva-p5);
+        }
+        
+        @keyframes shake {
+            0% { transform: scale(1.15) rotate(-2deg); }
+            50% { transform: scale(1.15) rotate(2deg); }
+            100% { transform: scale(1.15) rotate(0deg); }
+        }
+
+        .card-title {
+            font-size: 45px;
+            line-height: 1;
+            text-transform: uppercase;
+            color: var(--negro-p5);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 var(--blanco-p5);
+        }
+
+        .card-desc {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--negro-p5);
+            background: rgba(255,255,255,0.8);
+            padding: 10px;
+            border: 2px solid var(--negro-p5);
+            transform: skewX(5deg);
+        }
+
+        /* === BOTÓN CONFIRMAR ESTILO CINTA CORTADA === */
+        .confirm-wrapper {
+            position: relative;
+            transform: rotate(-2deg);
+        }
+
+        .confirm-btn {
+            font-family: var(--font-p5);
+            font-size: 32px;
+            letter-spacing: 3px;
+            color: var(--celeste-p5);
+            background: var(--negro-p5);
+            border: none;
+            padding: 15px 60px;
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: all 0.3s ease;
+            opacity: 0.4;
+            pointer-events: none;
+            text-transform: uppercase;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.3);
+        }
+
+        .confirm-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1.1);
+            color: var(--negro-p5);
+            background: var(--blanco-p5);
+            border: 4px solid var(--negro-p5);
+            box-shadow: 12px 12px 0 var(--negro-p5);
+        }
+
+        .confirm-btn.active:hover {
+            background: var(--celeste-p5);
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        .confirm-btn.active:active {
+            transform: scale(1.05) translate(5px, 5px);
+            box-shadow: 4px 4px 0 var(--negro-p5);
+        }
+
+        /* Decoración de botón */
+        .btn-decor {
+            position: absolute;
+            top: -10px; right: -20px;
+            background: var(--blanco-p5);
+            border: 2px solid var(--negro-p5);
+            padding: 2px 5px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: bold;
+            transform: rotate(15deg);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .confirm-btn.active ~ .btn-decor { opacity: 1; }
+
+        /* === Transición de salida dramática === */
+        .container.exiting {
+            animation: smash-out 0.6s var(--curva-p5) forwards;
+        }
+        @keyframes smash-out {
+            0% { transform: scale(1) rotate(0deg); }
+            20% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(0) rotate(-20deg) translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Capas de Fondo -->
+    <div class="bg-layer"></div>
+    <div class="bg-shape-1"></div>
+    <div class="bg-shape-2"></div>
+    
+    <!-- Textos masivos cortados -->
+    <div class="bg-text-massive t1">SYSTEM</div>
+    <div class="bg-text-massive t2">INIT</div>
+
+    <!-- Estrellas P5 -->
+    <div class="p5-star s1"></div>
+    <div class="p5-star black s2"></div>
+    <div class="p5-star s3"></div>
+
+    <div class="container" id="main-container">
+        
+        <!-- Título principal -->
+        <div class="title-block">
+            <h1 class="title-main">VIDEO ENHANCER</h1>
+            <div class="title-sub">Select a COMMAND</div>
+        </div>
+
+        <div class="question">
+            SeLecT yOuR <span>HaRDWaRe</span> TYPe:
+        </div>
+
+        <div class="cards">
+            <!-- Opción PC -->
+            <div class="card" id="card-desktop" data-mode="desktop">
+                <div class="card-content">
+                    <div class="card-title">DeSKToP PC</div>
+                    <div class="card-desc">
+                        Máximo poder. Usa tu GPU Dedicada para renderizar shaders pesados a 60FPS. 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opción Notebook / Mac -->
+            <div class="card" id="card-notebook" data-mode="notebook">
+                <div class="card-content">
+                    <div class="card-title">NoTeBooK<br>/ MaC</div>
+                    <div class="card-desc">
+                        Silencio Total. Usa gráficos integrados (Apple Silicon/Intel) ahorrando batería 0% ventiladores.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de Confirmación -->
+        <div class="confirm-wrapper">
+            <button class="confirm-btn" id="btn-confirm">
+                ExECuTe!
+            </button>
+            <div class="btn-decor">OK!</div>
+        </div>
+
+    </div>
+
+    <!-- Cargar script externo por CSP -->
+    <script src="welcome.js"></script>
+</body>
+</html>

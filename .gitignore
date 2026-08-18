@@ -1,0 +1,14 @@
+node_modules/
+dist/
+*.json
+!manifest.json
+!package.json
+!package-lock.json
+!tsconfig.json
+backup/
+*.zip
+read_logs.js
+test_*.js
+mock_youtube.html
+logger.js
+rolldown-runtime.js
